@@ -48,10 +48,41 @@ void loop() {
   update_time();
 }
 
+// This display will turn on/update each display in a way that ensures the numbers are visible
 void update_display() {
-  // alrite, here's the new plan:
-  // 1) function to set digits based on 4-digit time, this is always called (running) unless we are receiving information
-  // 2) function inside above, this will set the first display, second display, third dispaly  (when setting 2nd and 3rd display, you don't actually have to give it permanance, the shift register will sagve the state)
+  // Set each of the 4 digits on the 4-digit 7-segment display in a way that lets the human eye see it.
+  // Also sets the 7-segment displays so that the seconds are displayed correctly
+  for (int i = 0; i < 4; i++) {
+    set_display_digits(CURR_TIME[i], i, CURR_TIME[4], CURR_TIME[5]);
+  }
+}
+
+// Sends the specified number's byte representation through to the shift register
+void set_display_digits(int displayOneNumber, int digitSlot, int displayTwoNumber, int displayThreeNumber) {
+  // Make Latch pin low so we are able to make changes to the bits
+  digitalWrite(RCLK_PIN, LOW);
+
+  // Set 7-segment display digits.
+  // - They are common cathode, so we invert the bits
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[displayThreeNumber]);  // Last 7-segment display
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[displayTwoNumber]);  // Second last 7-segment display
+
+  // Set the 4-digit 7-segment display digits.
+  // - They are common anode, so we don't invert the bits.
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[displayOneNumber]);
+
+  // Make Latch pin high to "save" our changes, allowing the register to send out the updated state
+  // to send out the updated state
+  digitalWrite(RCLK_PIN, HIGH);
+
+  // Turn on one digit on the 4-digit 7-segment display
+  digitalWrite(DIGIT_PINS[digitSlot], HIGH);
+
+  // Wait 5ms so that our eyes see a constant digit being emitted from the display
+  delay(5);
+
+  // Turn off the 4-digit 7-segment display so we can set the next digit
+  digitalWrite(DIGIT_PINS[digitSlot], LOW);
 }
 
 /* If there is serial input available, then we assume it is time data (and therefore contains 6 numbers).
@@ -101,47 +132,4 @@ int char_to_int(char c) {
 // Returns true if c is a digit from 0-9
 bool is_int(char c) {
   return c >= '0' && c <= '9';
-}
-
-// Using the global time variables, we display the current time
-void display_time() {
-  for (int digit = 1; digit <= 4; digit++) {
-    set_digit(CURR_TIME[digit-1], digit);
-  }
-}
-
-// Display the provided INTEGER (1-9) in the designated DIGIT (1-4) spot on the display
-void set_digit(int integer, int digit) {
-  // Turn on/off the segments for the corresponding INTEGER
-  for (int pinNum = 0; pinNum < NUM_OF_SEGMENTS; pinNum++) {
-    boolean pinState = bitRead(PIN_BYTE_MAP[integer], 7-pinNum);
-    digitalWrite(SEGMENT_PINS[pinNum], pinState);
-  }
-
-  // Turn on the decimal point if it's the second digit
-  if (digit == 2) {
-    digitalWrite(DP_SEGMENT, LOW);
-  }
-
-  // Activate the specified DIGIT so we can see the INTEGER
-  digitalWrite(DIGIT_PINS[digit-1], HIGH);
-  
-  // Pause in the on state so there is time to see the displayed INTEGER
-  delay(3);
-
-  // Deactivate the specified DIGIT
-  digitalWrite(DIGIT_PINS[digit-1], LOW);
-}
-
-// Sends the specified number's byte representation through to the shift register
-void send_number(int digit) {
-  // Make Latch pin low so we are able to make changes to the bits
-  digitalWrite(RCLK_PIN, LOW);
-
-  // Write/shift the bits
-  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[digit]);
-
-  // Make Latch pin high to "save" our changes, allowing the register 
-  // to send out the updated state
-  digitalWrite(RCLK_PIN, HIGH);
 }
