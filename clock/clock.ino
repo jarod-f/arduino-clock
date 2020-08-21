@@ -54,9 +54,43 @@ void update_display() {
   // 2) function inside above, this will set the first display, second display, third dispaly  (when setting 2nd and 3rd display, you don't actually have to give it permanance, the shift register will sagve the state)
 }
 
+/* If there is serial input available, then we assume it is time data (and therefore contains 6 numbers).
+   We look at incoming bytes until we find a number.
+   If it is a number, we process it and update CURR_TIME
+   Processing is done by:
+   - Update a specific digit of CURR_TIME, depending on how many numbers have been read.
+     - The digits that will be changed go from 0-5, and correspond in the following way:
+       - (HR:MN:SC)
+       - (01:23:45)
+     - To keep track of which digit we're changing, each sucessful processing job will increment
+       the tracking variable by one */
 void update_time() {
-  // get serial input
-  // set the global time variables
+  // If there is time input waiting, we process it so that the arduino can display it
+  int timeDigitToChange = 0;
+  while (Serial.available() > 0) {
+    // Process each incoming byte individually, 
+    // If processing is successful, we set which time digit will be changed next
+    if (process_incoming_byte(Serial.read(), timeDigitToChange)) {
+      timeDigitToChange++;
+    }
+  }
+}
+
+/* Update a specific digit of CURR_TIME, depending on how many numbers have been read.
+     - The digits that will be changed go from 0-5, and correspond in the following way:
+       - (HR:MN:SC)
+       - (01:23:45)
+     - If processing is successful, return true
+     - Otherwise, return false */
+bool process_incoming_byte(char incoming_byte, int timeDigitToChange) {
+  // If the incoming byte is actually number
+  if (is_int(incoming_byte)) {
+    // We update CURR_TIME, which tracks the current time
+    CURR_TIME[timeDigitToChange] = char_to_int(incoming_byte);
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Converts an integer stored as a CHAR into an INT. --- i.e. '3' -> 3
@@ -67,18 +101,6 @@ int char_to_int(char c) {
 // Returns true if c is a digit from 0-9
 bool is_int(char c) {
   return c >= '0' && c <= '9';
-}
-
-/* Provided that incoming_data is an integer (stored as a char), we convert it
-   into a displayable time.
-   Return true if conversion is successful.
-   Return false otherwise (If the incoming_data is not an integer stored as a char) */
-bool convert_to_time(char incoming_data, int numOfDigitsRead) {
-  if (is_int(incoming_data)) {
-    CURR_TIME[numOfDigitsRead] = char_to_int(incoming_data);
-    return true;
-  }
-  return false;
 }
 
 // Using the global time variables, we display the current time
