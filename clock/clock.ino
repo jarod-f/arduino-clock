@@ -11,7 +11,7 @@ byte PIN_BYTE_MAP[10] = {
   B00011111, // 7
   B00000001, // 8
   B00001001  // 9
-};
+};  // Invert a byte using ~ (rather than !)
 
 // Each index corresponds to the arduino pin of a digit (1-4)
 const int NUM_OF_DIGITS = 4;
@@ -85,74 +85,324 @@ void initialize_pins() {
 //   delay(5000);
 // }
 
+void reset_display() {
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  digitalWrite(RCLK_PIN, HIGH);
+  delay(500);
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  digitalWrite(RCLK_PIN, HIGH);
+  delay(500);
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  digitalWrite(RCLK_PIN, HIGH);
+  delay(500);
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  digitalWrite(RCLK_PIN, HIGH);
+  delay(500);
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  digitalWrite(RCLK_PIN, HIGH);
+  delay(500);
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  digitalWrite(RCLK_PIN, HIGH);
+  delay(500);
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  digitalWrite(RCLK_PIN, HIGH);
+  delay(500);
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  digitalWrite(RCLK_PIN, HIGH);
+  delay(500);
+}
+
 void setup() {
   initialize_pins();
   Serial.begin(9600);
 
-  while(1) {
-    // Set the number that will be displayed
-    send_number(0);
-    // Display the number on the specified digit
-    digitalWrite(DIGIT_PINS[0], HIGH);
-    // Wait for digit persistence
-    delay(3);
-    // Turn off the number display
-    digitalWrite(DIGIT_PINS[0], LOW);
-    
-    // Set the number that will be displayed
-    send_number(1);
-    // Display the number on the specified digit
-    digitalWrite(DIGIT_PINS[1], HIGH);
-    // Wait for digit persistence
-    delay(3);
-    // Turn off the number display
-    digitalWrite(DIGIT_PINS[1], LOW);
-    
-    // Set the number that will be displayed
-    send_number(2);
-    // Display the number on the specified digit
-    digitalWrite(DIGIT_PINS[2], HIGH);
-    // Wait for digit persistence
-    delay(3);
-    // Turn off the number display
-    digitalWrite(DIGIT_PINS[2], LOW);
-    
-    // Set the number that will be displayed
-    send_number(3);
-    // Display the number on the specified digit
-    digitalWrite(DIGIT_PINS[3], HIGH);
-    // Wait for digit persistence
-    delay(3);
-    // Turn off the number display
-    digitalWrite(DIGIT_PINS[3], LOW);
-    
-  }
+  // 7-segment has to be inverse, use ~ (rather than !)
+
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);  // Display 3
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);  // Display 2
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B11111111);  // Display 1
+  digitalWrite(RCLK_PIN, HIGH);
+  digitalWrite(DIGIT_PINS[0], HIGH);
+  digitalWrite(DIGIT_PINS[1], HIGH);
+  digitalWrite(DIGIT_PINS[2], HIGH);
+  digitalWrite(DIGIT_PINS[3], HIGH);
+  delay(1000);
+  digitalWrite(DIGIT_PINS[0], LOW);
+  digitalWrite(DIGIT_PINS[1], LOW);
+  digitalWrite(DIGIT_PINS[2], LOW);
+  digitalWrite(DIGIT_PINS[3], LOW);
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B11111111);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B11111111);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  digitalWrite(RCLK_PIN, HIGH);
+  digitalWrite(DIGIT_PINS[0], HIGH);
+  digitalWrite(DIGIT_PINS[1], HIGH);
+  digitalWrite(DIGIT_PINS[2], HIGH);
+  digitalWrite(DIGIT_PINS[3], HIGH);
+  delay(1000);
+  digitalWrite(DIGIT_PINS[0], LOW);
+  digitalWrite(DIGIT_PINS[1], LOW);
+  digitalWrite(DIGIT_PINS[2], LOW);
+  digitalWrite(DIGIT_PINS[3], LOW);
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B11111111);
+  digitalWrite(RCLK_PIN, HIGH);
+  digitalWrite(DIGIT_PINS[0], HIGH);
+  digitalWrite(DIGIT_PINS[1], HIGH);
+  digitalWrite(DIGIT_PINS[2], HIGH);
+  digitalWrite(DIGIT_PINS[3], HIGH);
+  delay(1000);
+  digitalWrite(DIGIT_PINS[0], LOW);
+  digitalWrite(DIGIT_PINS[1], LOW);
+  digitalWrite(DIGIT_PINS[2], LOW);
+  digitalWrite(DIGIT_PINS[3], LOW);
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B11111111);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B11111111);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  digitalWrite(RCLK_PIN, HIGH);
+  digitalWrite(DIGIT_PINS[0], HIGH);
+  digitalWrite(DIGIT_PINS[1], HIGH);
+  digitalWrite(DIGIT_PINS[2], HIGH);
+  digitalWrite(DIGIT_PINS[3], HIGH);
+  delay(1000);
+  digitalWrite(DIGIT_PINS[0], LOW);
+  digitalWrite(DIGIT_PINS[1], LOW);
+  digitalWrite(DIGIT_PINS[2], LOW);
+  digitalWrite(DIGIT_PINS[3], LOW);
+  digitalWrite(RCLK_PIN, LOW);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);  // Display 3
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);  // Display 2
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B11111111);  // Display 1
+  digitalWrite(RCLK_PIN, HIGH);
+  digitalWrite(DIGIT_PINS[0], HIGH);
+  digitalWrite(DIGIT_PINS[1], HIGH);
+  digitalWrite(DIGIT_PINS[2], HIGH);
+  digitalWrite(DIGIT_PINS[3], HIGH);
+  delay(1000);
+  digitalWrite(DIGIT_PINS[0], LOW);
+  digitalWrite(DIGIT_PINS[1], LOW);
+  digitalWrite(DIGIT_PINS[2], LOW);
+  digitalWrite(DIGIT_PINS[3], LOW);
+
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[0]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // delay(500);
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[1]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // delay(500);
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[2]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // delay(500);
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[3]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // delay(500);
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[4]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // delay(500);
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[5]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // delay(500);
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[6]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // delay(500);
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[7]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // delay(500);
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[8]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // delay(500);
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[9]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // delay(500);
+
+  // reset_display();
+
+
+  // For the 7-digit, 0 is off, 1 is on
+
+  // while(true);
+
+  // Set the number that will be displayed
+  // Display the number on the specified digit
+  // digitalWrite(DIGIT_PINS[0], HIGH);
+  // Wait for digit persistence
+  // delay(500);
+  // Turn off the number display
+  // digitalWrite(DIGIT_PINS[0], LOW);
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  // digitalWrite(RCLK_PIN, HIGH);
+
+
+
+  // Set the number that will be displayed
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[0]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // // Display the number on the specified digit
+  // digitalWrite(DIGIT_PINS[0], HIGH);
+  // // Wait for digit persistence
+  // delay(500);
+  // // Turn off the number display
+  // digitalWrite(DIGIT_PINS[0], LOW);
+
+  // // Set the number that will be displayed
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[1]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // // Display the number on the specified digit
+  // digitalWrite(DIGIT_PINS[1], HIGH);
+  // // Wait for digit persistence
+  // delay(500);
+  // // Turn off the number display
+  // digitalWrite(DIGIT_PINS[1], LOW);
   
+  // // Set the number that will be displayed
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[2]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // // Display the number on the specified digit
+  // digitalWrite(DIGIT_PINS[2], HIGH);
+  // // Wait for digit persistence
+  // delay(500);
+  // // Turn off the number display
+  // digitalWrite(DIGIT_PINS[2], LOW);
+
+  // // Set the number that will be displayed
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[3]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // // Display the number on the specified digit
+  // digitalWrite(DIGIT_PINS[3], HIGH);
+  // // Wait for digit persistence
+  // delay(500);
+  // // Turn off the number display
+  // digitalWrite(DIGIT_PINS[3], LOW);
+
+  // // Set the number that will be displayed
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[4]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // // Display the number on the specified digit
+  // digitalWrite(DIGIT_PINS[0], HIGH);
+  // // Wait for digit persistence
+  // delay(500);
+  // // Turn off the number display
+  // digitalWrite(DIGIT_PINS[0], LOW);
+
+  // // Set the number that will be displayed
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[5]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // // Display the number on the specified digit
+  // digitalWrite(DIGIT_PINS[1], HIGH);
+  // // Wait for digit persistence
+  // delay(500);
+  // // Turn off the number display
+  // digitalWrite(DIGIT_PINS[1], LOW);
+  
+  // // Set the number that will be displayed
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[6]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // // Display the number on the specified digit
+  // digitalWrite(DIGIT_PINS[2], HIGH);
+  // // Wait for digit persistence
+  // delay(500);
+  // // Turn off the number display
+  // digitalWrite(DIGIT_PINS[2], LOW);
+
+  // // Set the number that will be displayed
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[7]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // // Display the number on the specified digit
+  // digitalWrite(DIGIT_PINS[3], HIGH);
+  // // Wait for digit persistence
+  // delay(500);
+  // // Turn off the number display
+  // digitalWrite(DIGIT_PINS[3], LOW);
+
+  // // Set the number that will be displayed
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[8]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // // Display the number on the specified digit
+  // digitalWrite(DIGIT_PINS[0], HIGH);
+  // // Wait for digit persistence
+  // delay(500);
+  // // Turn off the number display
+  // digitalWrite(DIGIT_PINS[0], LOW);
+
+  // // Set the number that will be displayed
+  // digitalWrite(RCLK_PIN, LOW);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[9]);
+  // digitalWrite(RCLK_PIN, HIGH);
+  // // Display the number on the specified digit
+  // digitalWrite(DIGIT_PINS[1], HIGH);
+  // // Wait for digit persistence
+  // delay(500);
+  // // Turn off the number display
+  // digitalWrite(DIGIT_PINS[1], LOW);
+  
+  // Make Latch pin low so we are able to make changes to the bits
+  // digitalWrite(RCLK_PIN, LOW);
+
+  // // Write/shift the bits
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+  // shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, B00000000);
+
+  // // Make Latch pin high to "save" our changes, allowing the register 
+  // // to send out the updated state
+  // digitalWrite(RCLK_PIN, HIGH);
 
   // dont go to loop
   // delay(300 * 1000);
 }
 
 void loop() {
-  // Update time (either by incrementing seconds or by re-syncing it using python)
-  if (Serial.available() > 0) {
-    // Read the incoming time data and split it up into digits so that it can be displayed
-    // digit-by-digit.
-    int numOfDigitsRead = 0;
-    while (numOfDigitsRead < 6) {
-      // If we successfully convert the incoming data into a displayable format, 
-      // we increment numOfDigitsRead so that we can modify specific digits of the display
-      if (convert_to_time(Serial.read(), numOfDigitsRead)) {
-        numOfDigitsRead++;
-      }
-    }
+  // // Update time (either by incrementing seconds or by re-syncing it using python)
+  // if (Serial.available() > 0) {
+  //   // Read the incoming time data and split it up into digits so that it can be displayed
+  //   // digit-by-digit.
+  //   int numOfDigitsRead = 0;
+  //   while (numOfDigitsRead < 6) {
+  //     // If we successfully convert the incoming data into a displayable format, 
+  //     // we increment numOfDigitsRead so that we can modify specific digits of the display
+  //     if (convert_to_time(Serial.read(), numOfDigitsRead)) {
+  //       numOfDigitsRead++;
+  //     }
+  //   }
     
-    // Clear the buffer now that we have read the time
-    while (Serial.available() > 0) { Serial.read(); }
-  }
+  //   // Clear the buffer now that we have read the time
+  //   while (Serial.available() > 0) { Serial.read(); }
+  // }
 
-  // Display the time on the 4-digit 7-segment display
-  display_time();
+  // // Display the time on the 4-digit 7-segment display
+  // display_time();
 }
 
 // Converts an integer stored as a CHAR into an INT. --- i.e. '3' -> 3
@@ -213,7 +463,7 @@ void send_number(int digit) {
   digitalWrite(RCLK_PIN, LOW);
 
   // Write/shift the bits
-  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[digit]);
+  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, ~PIN_BYTE_MAP[digit]);
 
   // Make Latch pin high to "save" our changes, allowing the register 
   // to send out the updated state
