@@ -96,14 +96,19 @@ void set_display_digits(int displayOneNumber, int digitSlot, int displayTwoNumbe
      - To keep track of which digit we're changing, each sucessful processing job will increment
        the tracking variable by one */
 void update_time() {
-  // If there is time input waiting, we process it so that the arduino can display it
-  int timeDigitToChange = 0;
-  while (Serial.available() > 0) {
-    // Process each incoming byte individually, 
-    // If processing is successful, we set which time digit will be changed next
-    if (process_incoming_byte(Serial.read(), timeDigitToChange)) {
-      timeDigitToChange++;
+  // If there is input available, we read it...
+  if (Serial.available() > 0) {
+    int timeDigitToChange = 0;
+    // We don't stop reading the serial port until we get all 6 digits of data we need
+    while (timeDigitToChange < 6) {
+      // While we are looking for data, we only want to draw from the Serial port if there is data to pull
+      if (Serial.available() > 0 && process_incoming_byte(Serial.read(), timeDigitToChange)) {
+        timeDigitToChange++;
+      }
     }
+
+    // Clear the buffer now that we have read all the time digits
+    while (Serial.available() > 0) { Serial.read(); }
   }
 }
 
