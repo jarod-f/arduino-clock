@@ -69,7 +69,15 @@ void set_display_digits(int displayOneNumber, int digitSlot, int displayTwoNumbe
 
   // Set the 4-digit 7-segment display digits.
   // - They are common anode, so we don't invert the bits.
-  shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[displayOneNumber]);
+  if (digitSlot == 1) {
+    // If setting the second digit of the 4-digit display, turn on the decimal segment to represent
+    // the ":" that is normally seen when telling time
+    byte numberWithDecimal = PIN_BYTE_MAP[displayOneNumber];
+    bitWrite(numberWithDecimal, 0, 0);  // Set right most bit (DP) to be 0 (High/On)
+    shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, numberWithDecimal);
+  } else {
+    shiftOut(SER_PIN, SRCLK_PIN, LSBFIRST, PIN_BYTE_MAP[displayOneNumber]);
+  }
 
   // Make Latch pin high to "save" our changes, allowing the register to send out the updated state
   // to send out the updated state
