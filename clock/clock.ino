@@ -45,7 +45,7 @@ void setup() {
 
 void loop() {
   update_display();
-  update_time();
+  receive_time();
 }
 
 // This display will turn on/update each display in a way that ensures the numbers are visible
@@ -103,7 +103,7 @@ void set_display_digits(int displayOneNumber, int digitSlot, int displayTwoNumbe
        - (01:23:45)
      - To keep track of which digit we're changing, each sucessful processing job will increment
        the tracking variable by one */
-void update_time() {
+void receive_time() {
   // If there is input available, we read it...
   if (Serial.available() > 0) {
     int timeDigitToChange = 0;
