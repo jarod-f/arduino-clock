@@ -30,6 +30,7 @@ pyserial 3.4
 
 # Materials
 - An OS capable of running Python 3 (I used Windows 10)
+- An Arduino Uno mounted with a ATmega328P microcontroller.
 - One 3461bs 4-digit 7-segment display
 - Two 5101as 7-segment displays
 - Three 74HC595 shift registers
