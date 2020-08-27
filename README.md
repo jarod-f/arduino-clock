@@ -1,7 +1,7 @@
 # Arduino Clock
 This is a personal project made with the intent to learn more about computer-controlled electronics.
 
-You can read more about this project over at jarod-f.github.io/portfolio-site/pages/clock.html
+You can read more about this project over at <a href="jarod-f.github.io/portfolio-site/pages/clock.html">jarod-f.github.io/portfolio-site/pages/clock.html</a>
 
 Below is an image showing what the final product looked like.
 
@@ -11,7 +11,7 @@ Below is an image showing what the final product looked like.
 This project has two components, the hardware and the software.
 
 ## Hardware
-For hardware, the three shift registers are daisychained together.  This minimizes the connections to the Arduino.
+For hardware, the three shift registers are daisy-chained together.  This minimizes the connections to the Arduino.
 
 The shift register outputs are connected to the displays.  This is how the displays know which numbers to show.
 
@@ -26,7 +26,7 @@ The arduino is constantly looping through two functions:
 - The other handles the displays.  It is responsible for activating the displays and shifting out the correct data to the shift registers.
 
 ## Dependencies
-pyserial 3.4
+<a href="https://pypi.org/project/pyserial/">pyserial 3.4</a>
 
 # Materials
 - An OS capable of running Python 3 (I used Windows 10)
@@ -42,4 +42,4 @@ pyserial 3.4
 # Contact
 Email: forbesjarod@gmail.com
 
-My portfolio: jarod-f.github.io/portfolio-site/
+My portfolio: <a href="https://jarod-f.github.io/portfolio-site/">jarod-f.github.io/portfolio-site/</a>
