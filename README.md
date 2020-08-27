@@ -1,7 +1,7 @@
 # Arduino Clock
 This is a personal project made with the intent to learn more about computer-controlled electronics.
 
-You can read more about this project over at <a href="jarod-f.github.io/portfolio-site/pages/clock.html">jarod-f.github.io/portfolio-site/pages/clock.html</a>
+You can read more about this project over at <a href="https://jarod-f.github.io/portfolio-site/pages/clock.html">jarod-f.github.io/portfolio-site/pages/clock.html</a>
 
 Below is an image showing what the final product looked like.
 
