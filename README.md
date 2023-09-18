@@ -1,8 +1,6 @@
 # Arduino Clock
 This is a personal project made with the intent to learn more about computer-controlled electronics.
 
-You can read more about this project over at <a href="https://jarod-f.github.io/portfolio-site/pages/clock.html">jarod-f.github.io/portfolio-site/pages/clock.html</a>
-
 Below is an image showing what the final product looked like.
 
 <img style="max-height: 350px;" src="https://jarod-f.github.io/portfolio-site/media/clock/clock-turned-on.jpg">
@@ -41,5 +39,3 @@ The arduino is constantly looping through two functions:
 
 # Contact
 Email: forbesjarod@gmail.com
-
-My portfolio: <a href="https://jarod-f.github.io/portfolio-site/">jarod-f.github.io/portfolio-site/</a>
